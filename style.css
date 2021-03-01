@@ -1,0 +1,40 @@
+
+body {
+    margin: 0px !important;
+    overflow: hidden;
+}
+
+#screen {
+    width: 100vw;
+    height: 100vh;
+}
+
+#screen .section * {
+    position: absolute;
+    /* left: 50%; */
+    /* transform: translate(-50%, -50%); */
+}
+
+#screen #menu {
+
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    list-style-type: none;
+    font-size: 30px;
+    padding-right: 50px;
+
+}
+
+#screen #menu li {
+    cursor: pointer;
+}
+
+#lorem h1 {
+    margin: 0px 100px 300px 0px;
+}
+
+#lorem-description {
+    margin: 50px 0px 0px 100px;
+    background-color: #f77;
+}
