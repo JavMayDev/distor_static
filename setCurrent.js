@@ -11,13 +11,12 @@ function animateMaterial (materialSettings, duration = scrollTime /2) {
 	    easing: 'linear'
 	})
     })
-
 }
 
 function setCurrent(targetIndex) {
     // execute only once at time
-    if (scrollLock) return
-    scrollLock = true
+    if (scrollLock || targetIndex == current) return
+	scrollLock = true
 
     animateMaterial({ uNoiseDistortAmplitude: 1, uSineDistortAmplitude: 1 }, 0)
 
@@ -41,10 +40,10 @@ function setCurrent(targetIndex) {
 
         // move current section
         animateChildren(sections[current], {
-            ...frameStatus,
+	    ...frameStatus,
             easing,
             duration,
-        })
+        }, isTarget)
 
         // increase or decrease current index
         current += incr
@@ -66,26 +65,32 @@ function setCurrent(targetIndex) {
                 duration,
                 complete,
             },
-            isTarget
+            isTarget,
         )
     }
 
     frame()
 }
 
-function animateChildren(parent, animeSettings, isTarget = false) {
+function animateChildren(parent, animeSettings, isTarget) {
     const children = Array.from(parent.getElementsByTagName('*'))
+	// exclude blotter canvas
+	.filter(function(child){
+	    if(!child.classList.contains('b-canvas')) return child
+	})
+
     children.forEach((child, i) => {
+	var customSettings = animeSettings
 	if(isTarget) {
+	    Object.assign(customSettings, JSON.parse(child.getAttribute('current')))
 	    animateMaterial({ uNoiseDistortAmplitude: 0, uSineDistortAmplitude: 0 })
-	    // smoothDistortStop()
 	    if (i == children.length - 1) // the last animated element
 		animeSettings.complete = () => scrollLock = false
 	}
 
         anime({
             targets: child,
-            ...animeSettings,
+	    ...customSettings,
             delay:
 		child.classList.contains('delay')
                     ? child.getAttribute('delaytime')

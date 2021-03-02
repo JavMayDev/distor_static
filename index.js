@@ -1,22 +1,23 @@
 var state = {
-    prev: { top: '-100%' },
-    current: { top: '50%' },
-    next: { top: '200%' },
+    prev: { bottom: '200%' },
+    current: { bottom: '50%' },
+    next: { bottom: '-100%' }
 }
-
-console.log( 'state:', state )
 
 var sections = Array.from(document.getElementsByClassName('section'))
 
+// set up material
 var material = new Blotter.RollingDistortMaterial()
 material.uniforms.uSpeed.value = 0.2
 material.uniforms.uRotation.value = 90
-material.uniforms.uNoiseDistortAmplitude.value = 0
-material.uniforms.uSineDistortAmplitude.value = 0
+material.uniforms.uNoiseDistortAmplitude.value = 0.5
+material.uniforms.uSineDistortAmplitude.value = 0.5
+
+animateMaterial({ uNoiseDistortAmplitude: 0, uSineDistortAmplitude: 0 }, 500)
 
 // set first as current
 Array.from(sections[0].getElementsByTagName('*')).forEach(child =>
-    Object.assign(child.style, state.current)
+    Object.assign(child.style, JSON.parse(child.getAttribute('current')))
 )
 
 // and the rest as next
@@ -26,21 +27,24 @@ for (let i = 1; i < sections.length; i++)
         Object.assign(child.style, state.next)
     })
 
-sections.forEach(function (
-    section
-) {
+sections.forEach(function (section) {
     Array.from(section.getElementsByTagName('*'))
         .filter(function (sectionChild) {
             if (sectionChild.classList.contains('distor')) return sectionChild
         })
         .forEach(function (distor) {
-            var text = new Blotter.Text(distor.innerHTML, { size: 50 })
+            var text = new Blotter.Text(distor.innerHTML, distor.dataset)
             distor.innerHTML = ''
             var blotter = new Blotter(material, {
                 texts: text,
             })
             var scope = blotter.forText(text)
             scope.appendTo(distor)
+
+	    // add background color to the canvas
+	    if(distor.getAttribute('background-color')) 
+		distor.getElementsByTagName('canvas').item(0).style.backgroundColor = 
+		    distor.getAttribute('background-color')
         })
 })
 
