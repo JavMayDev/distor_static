@@ -20,6 +20,8 @@ function setCurrent(targetIndex) {
     scrollLock = true;
 
     animateMaterial({ uNoiseDistortAmplitude: 1, uSineDistortAmplitude: 1 }, 0, 0);
+    if(window[sections[current].getAttribute('getout')])
+	window[sections[current].getAttribute('getout')]()
 
     var incr, frameStatus;
     if (targetIndex > current) {
@@ -39,6 +41,7 @@ function setCurrent(targetIndex) {
         // instead of just set complete as null
         if (targetIndex == current) return;
 
+
         // move current section
         animateChildren(
             sections[current],
@@ -51,10 +54,12 @@ function setCurrent(targetIndex) {
         // if done
         if (current == targetIndex) {
             // smoother easing
-            easing = 'easeOutQuart';
+            easing = 'cubicBezier(.5, 0, .5, 1)';
             duration = scrollTime * 0.66;
             isTarget = true;
-            complete = null; // break recursion
+	    if(window[sections[current].getAttribute('getin')])
+		window[sections[current].getAttribute('getin')]()
+	    complete = null
         }
 
         // set 'next' section as current

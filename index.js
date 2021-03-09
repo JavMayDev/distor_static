@@ -1,5 +1,5 @@
 var state = {
-    prev: { bottom: '200%' },
+    prev: { bottom: '110%' },
     current: { bottom: '50%' },
     next: { bottom: '-100%' },
 };
@@ -20,9 +20,9 @@ animateMaterial(
 );
 
 // set first as current
-Array.from(sections[0].getElementsByTagName('*')).forEach(function (child) {
-    Object.assign(child.style, JSON.parse(child.getAttribute('current')));
-});
+// Array.from(sections[0].getElementsByTagName('*')).forEach(function (child) {
+//     Object.assign(child.style, JSON.parse(child.getAttribute('current')));
+// });
 
 // and the rest as next
 for (var i = 1; i < sections.length; i++)
@@ -74,3 +74,7 @@ window.onwheel = function (event) {
     // if go up and current isn't first
     if (event.deltaY <= 0 && current > 0) setCurrent(current - 1);
 };
+
+function testfun () {
+    alert('ima test function lol')
+}
