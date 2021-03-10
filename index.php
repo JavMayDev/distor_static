@@ -13,7 +13,9 @@ $url = 'http://192.168.100.7/distor_static/';
 </head>
 <body>
 
-    <div id="loading" style="font-family: 'Bronxos'; font-size: 50px;">Loading...</div>
+    <div id="loading" style="font-family: 'Bronxos'; font-size: 50px;">
+	<span style="left: 50%; top: 50%; transform: translate(-50%, -50%); position: absolute">Cargando...</span>
+    </div>
 
     <div id="screen">
 

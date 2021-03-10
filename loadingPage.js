@@ -1,6 +1,11 @@
 window.addEventListener('load', function () {
     document.getElementById('loading').style.display = 'none';
 
+    animateMaterial(
+	{ uNoiseDistortAmplitude: 0, uSineDistortAmplitude: 0 },
+	1000,
+	0
+    );
     animateCover()
 
     var prevY = 0;

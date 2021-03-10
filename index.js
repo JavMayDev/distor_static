@@ -13,12 +13,6 @@ material.uniforms.uRotation.value = 90;
 material.uniforms.uNoiseDistortAmplitude.value = 1;
 material.uniforms.uSineDistortAmplitude.value = 1;
 
-animateMaterial(
-    { uNoiseDistortAmplitude: 0, uSineDistortAmplitude: 0 },
-    1000,
-    0
-);
-
 // and the rest as next
 for (var i = 1; i < sections.length; i++)
     Array.from(sections[i].getElementsByTagName('*')).forEach(function (child) {
@@ -68,3 +62,19 @@ window.onwheel = function (event) {
     // if go up and current isn't first
     if (event.deltaY <= 0 && current > 0) setCurrent(current - 1);
 };
+
+// the same fake scrolling for touch devices
+var touchPrev
+window.ontouchstart = function (event) {
+    touchPrev = event.changedTouches[0].clientY
+}
+window.ontouchmove = function (event) {
+    var touchCurrent = event.changedTouches[0].clientY 
+
+    if( touchCurrent < touchPrev && current < sections.length - 1) 
+	setCurrent(current + 1)
+    if( touchCurrent > touchPrev && current > 0)
+	setCurrent(current - 1)
+
+    touchPrev = touchCurrent
+}
