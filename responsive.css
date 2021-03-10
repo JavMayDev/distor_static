@@ -1,0 +1,9 @@
+@media screen and (max-width: 1300px) {
+    #cover-titles {
+	left: 50px !important;
+    }
+    #cover-img {
+	right: 50px !important;
+    }
+    
+}

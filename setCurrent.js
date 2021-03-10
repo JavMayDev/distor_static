@@ -88,7 +88,7 @@ function animateChildren(parent, animeSettings, isTarget) {
         if (isTarget) {
             Object.assign(
                 customSettings,
-                JSON.parse(child.getAttribute('current'))
+		{ bottom: child.getAttribute('bottom-on-current') }
             );
 
             if (child.classList.contains('delay'))
